@@ -900,7 +900,7 @@ volumes:
 
 - посилання на Git репозиторій з усіма файлами (Dockerfile, docker-compose.yml, .dockerignore, README.md).
 
-[👉 Здати лабораторну роботу](#){ .md-button .md-button--primary }
+[👉 Здати лабораторну роботу](#)
 
 ## ❓ Контрольні запитання
 

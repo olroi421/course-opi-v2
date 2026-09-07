@@ -490,7 +490,7 @@ Production-середовище має суттєві відмінності в�
 
 Як відповідь на завдання в LMS Moodle дати посилання на репозиторій з проєктом.
 
-[👉 Здати лабораторну роботу](https://moodle.vcolnuft.volyn.ua/moodle/course/view.php?id=1426#section-2){ .md-button .md-button--primary }
+[👉 Здати лабораторну роботу](https://moodle.vcolnuft.volyn.ua/moodle/course/view.php?id=1426#section-2)
 
 
 ## ❓ Контрольні запитання
