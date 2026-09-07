@@ -900,7 +900,7 @@ volumes:
 
 - посилання на Git репозиторій з усіма файлами (Dockerfile, docker-compose.yml, .dockerignore, README.md).
 
-[👉 Здати лабораторну роботу](#)
+[👉 Здати лабораторну роботу](https://moodle.vcolnuft.volyn.ua/moodle/course/view.php?id=1426#section-2)
 
 ## ❓ Контрольні запитання
 
