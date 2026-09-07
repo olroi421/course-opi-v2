@@ -189,4 +189,4 @@ cursor.execute('INSERT INTO users (name, email) VALUES (?, ?)', (name, email))
     2. як відповідь на завдання в LMS Moodle дати посилання на репозиторій з проєктом;
     3. захистити лабораторну перед викладачем.
 
-[:fontawesome-solid-cloud-upload: Здати лабораторну роботу](http://194.187.154.85/moodle/course/view.php?id=1426#section-2){ .md-button .md-button--primary }
+[👉 Здати лабораторну роботу](https://moodle.vcolnuft.volyn.ua/moodle/course/view.php?id=1426#section-2){ .md-button .md-button--primary }

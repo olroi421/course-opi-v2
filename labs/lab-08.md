@@ -900,7 +900,7 @@ volumes:
 
 - посилання на Git репозиторій з усіма файлами (Dockerfile, docker-compose.yml, .dockerignore, README.md).
 
-[:fontawesome-solid-cloud-upload: Здати лабораторну роботу](#){ .md-button .md-button--primary }
+[👉 Здати лабораторну роботу](#){ .md-button .md-button--primary }
 
 ## ❓ Контрольні запитання
 

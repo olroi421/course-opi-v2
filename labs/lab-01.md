@@ -174,7 +174,7 @@ print(average([4, 5, 6]))
     2. як відповідь на завдання в LMS Moodle завантажити звіт `lab01-report.md`;
     3. захистити лабораторну перед викладачем.
 
-[👉 Здати лабораторну роботу](http://194.187.154.85/moodle/course/view.php?id=1426#section-2)
+[👉 Здати лабораторну роботу](https://moodle.vcolnuft.volyn.ua/moodle/course/view.php?id=1426#section-2)
 
 ## ❓ Контрольні запитання
 

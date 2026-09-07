@@ -483,4 +483,4 @@ def delete_product(product_id):
 - `500 Internal Server Error` - [коли виникає]
 ````
 
-[:fontawesome-solid-cloud-upload: Здати лабораторну роботу](http://194.187.154.85/moodle/course/view.php?id=1426#section-2){ .md-button .md-button--primary }
+[👉 Здати лабораторну роботу](https://moodle.vcolnuft.volyn.ua/moodle/course/view.php?id=1426#section-2){ .md-button .md-button--primary }
