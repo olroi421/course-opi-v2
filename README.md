@@ -25,9 +25,9 @@
 | Лекція 01 Вступ до програмної інженерії та її місце в IT | [Конспект лекції](lectures/lecture-01.md) | [Презентація](presentations/presentation-01.md) |
 | Лекція 02 Сучасні технології та інструменти розробки | [Конспект лекції](lectures/lecture-02.md) | [Презентація](presentations/presentation-02.md) |
 | Лекція 03 Життєвий цикл розробки програмного забезпечення (SDLC) | [Конспект лекції](lectures/lecture-03.md) | [Презентація](presentations/presentation-03.md) |
-| ~Лекція 04 Вимоги до ПЗ: збір, аналіз, документування~ | [Конспект лекції](lectures/lecture-04.md) | [Презентація](presentations/presentation-04.md) |
-| ~Лекція 05 Гнучкі методології: Agile Manifesto та принципи~ | [Конспект лекції](lectures/lecture-05.md) | [Презентація](presentations/presentation-05.md) |
-| ~Лекція 06 Scrum та Kanban~ | [Конспект лекції](lectures/lecture-06.md) | [Презентація](presentations/presentation-06.md) |
+| Лекція 04 Вимоги до ПЗ: збір, аналіз, документування | [Конспект лекції](lectures/lecture-04.md) | [Презентація](presentations/presentation-04.md) |
+| Лекція 05 Гнучкі методології: Agile Manifesto та принципи | [Конспект лекції](lectures/lecture-05.md) | [Презентація](presentations/presentation-05.md) |
+| Лекція 06 Scrum та Kanban | [Конспект лекції](lectures/lecture-06.md) | [Презентація](presentations/presentation-06.md) |
 | ~Лекція 07 Основи ООП~ | [Конспект лекції](lectures/lecture-07.md) | [Презентація](presentations/presentation-07.md) |
 | ~Лекція 08 Принципи проектування: SOLID, DRY, KISS~ | [Конспект лекції](lectures/lecture-08.md) | [Презентація](presentations/presentation-08.md) |
 | ~Лекція 09 Типи архітектур ПЗ~ | [Конспект лекції](lectures/lecture-09.md) | [Презентація](presentations/presentation-09.md) |

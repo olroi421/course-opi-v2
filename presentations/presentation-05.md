@@ -288,15 +288,17 @@ graph TD
     H --> D
 ```
 
-### 👥 **Ролі в Scrum:**
+### 👥 **Підзвітності в Scrum (Scrum Guide 2020):**
 
 - **🎯 Product Owner** - визначає ЩО робити
-- **🛠️ Scrum Master** - допомагає ЯК робити
-- **👨‍💻 Development Team** - виконує роботу
+- **🛠️ Scrum Master** - допомагає команді дотримуватись Scrum
+- **👨‍💻 Розробники (Developers)** - виконують роботу, разом з PO та SM утворюють єдину Scrum-команду
+
+> ℹ️ Термін "Development Team" як окрема підкоманда більше не використовується — Scrum-команда єдина.
 
 ### ⏰ **Події Scrum:**
 
-- **📅 Daily Scrum** (15 хв щодня)
+- **📅 Daily Scrum** (15 хв щодня, формат вільний)
 - **🎯 Sprint Planning** (8 годин на 4-тижневий спринт)
 - **👥 Sprint Review** (4 години)
 - **🔍 Sprint Retrospective** (3 години)
