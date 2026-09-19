@@ -28,11 +28,11 @@
 | Лекція 04 Вимоги до ПЗ: збір, аналіз, документування | [Конспект лекції](lectures/lecture-04.md) | [Презентація](presentations/presentation-04.md) |
 | Лекція 05 Гнучкі методології: Agile Manifesto та принципи | [Конспект лекції](lectures/lecture-05.md) | [Презентація](presentations/presentation-05.md) |
 | Лекція 06 Scrum та Kanban | [Конспект лекції](lectures/lecture-06.md) | [Презентація](presentations/presentation-06.md) |
-| ~Лекція 07 Основи ООП~ | [Конспект лекції](lectures/lecture-07.md) | [Презентація](presentations/presentation-07.md) |
-| ~Лекція 08 Принципи проектування: SOLID, DRY, KISS~ | [Конспект лекції](lectures/lecture-08.md) | [Презентація](presentations/presentation-08.md) |
-| ~Лекція 09 Типи архітектур ПЗ~ | [Конспект лекції](lectures/lecture-09.md) | [Презентація](presentations/presentation-09.md) |
-| ~Лекція 10 Робота з базами даних: реляційні та NoSQL~ | [Конспект лекції](lectures/lecture-10.md) | [Презентація](presentations/presentation-10.md) |
-| ~Лекція 11 RESTful API: принципи проектування, тестування та документування~ | [Конспект лекції](lectures/lecture-11.md) | [Презентація](presentations/presentation-11.md) |
+| Лекція 07 Основи ООП | [Конспект лекції](lectures/lecture-07.md) | [Презентація](presentations/presentation-07.md) |
+| Лекція 08 Принципи проектування: SOLID, DRY, KISS | [Конспект лекції](lectures/lecture-08.md) | [Презентація](presentations/presentation-08.md) |
+| Лекція 09 Типи архітектур ПЗ | [Конспект лекції](lectures/lecture-09.md) | [Презентація](presentations/presentation-09.md) |
+| Лекція 10 Робота з базами даних: реляційні та NoSQL | [Конспект лекції](lectures/lecture-10.md) | [Презентація](presentations/presentation-10.md) |
+| Лекція 11 RESTful API: принципи проектування, тестування та документування | [Конспект лекції](lectures/lecture-11.md) | [Презентація](presentations/presentation-11.md) |
 | ~Лекція 12 Стратегії тестування: піраміда тестів~ | [Конспект лекції](lectures/lecture-12.md) | [Презентація](presentations/presentation-12.md) |
 | ~Лекція 13 CI/CD, моніторинг та підтримка якості коду~ | [Конспект лекції](lectures/lecture-13.md) | [Презентація](presentations/presentation-13.md) |
 | ~Лекція 14 Інформаційна безпека в розробці ПЗ~ | [Конспект лекції](lectures/lecture-14.md) | [Презентація](presentations/presentation-14.md) |
@@ -48,7 +48,7 @@
 | Тема лабораторної | Кількість годин |
 |-------|------|
 | [Лабораторна робота 01 Основи Python: обробка та аналіз даних](labs/lab-01.md) | 4 |
-| [~Лабораторна робота 02 Налаштування середовища розробки та Git workflow~](labs/lab-02.md) | 4 |
+| [Лабораторна робота 02 Налаштування середовища розробки та Git workflow](labs/lab-02.md) | 4 |
 | [~Лабораторна робота 03 Розробка базового вебпроєкту~](labs/lab-03.md) | 6 |
 | [~Лабораторна робота 04 Реалізація бази даних для вебпроєкту~](labs/lab-04.md) | 6 |
 | [~Лабораторна робота 05 Розробка RESTful API з документацією~](labs/lab-05.md) | 6 |
