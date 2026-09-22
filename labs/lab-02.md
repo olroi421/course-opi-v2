@@ -220,12 +220,13 @@ __pycache__/
 
 ## ▶️ Хід роботи
 
-!!! tip "Перед виконанням лабораторної"
-    Рекомендується попрактикуватись з git в онлайн симуляторах та переглянути документацію:
-
-    - [Git Simulator Online](https://webutility.io/git-simulator-online)
-    - [Learn Git Branching](https://learngitbranching.js.org/?locale=uk)
-    - [Pro Git book](https://git-scm.com/book/uk/v2)
+> [!TIP]
+>  **Перед виконанням лабораторної**
+> Рекомендується попрактикуватись з git в онлайн симуляторах та переглянути документацію:
+> - [Курс GitByBit](https://gitbybit.com/uk)
+> - [Git Simulator Online](https://webutility.io/git-simulator-online)
+> - [Learn Git Branching](https://learngitbranching.js.org/?locale=uk)
+> - [Pro Git book](https://git-scm.com/book/uk/v2)
 
 
 1. Формування команди та планування:
