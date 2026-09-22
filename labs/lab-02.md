@@ -224,8 +224,8 @@ __pycache__/
 >  **Перед виконанням лабораторної**
 > Рекомендується попрактикуватись з git в онлайн симуляторах та переглянути документацію:
 > - [Курс GitByBit](https://gitbybit.com/uk)
-> - [Git Simulator Online](https://webutility.io/git-simulator-online)
 > - [Learn Git Branching](https://learngitbranching.js.org/?locale=uk)
+> - [Git Simulator Online](https://webutility.io/git-simulator-online)
 > - [Pro Git book](https://git-scm.com/book/uk/v2)
 
 
