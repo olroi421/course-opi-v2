@@ -33,11 +33,11 @@
 | Лекція 09 Типи архітектур ПЗ | [Конспект лекції](lectures/lecture-09.md) | [Презентація](presentations/presentation-09.md) |
 | Лекція 10 Робота з базами даних: реляційні та NoSQL | [Конспект лекції](lectures/lecture-10.md) | [Презентація](presentations/presentation-10.md) |
 | Лекція 11 RESTful API: принципи проектування, тестування та документування | [Конспект лекції](lectures/lecture-11.md) | [Презентація](presentations/presentation-11.md) |
-| ~Лекція 12 Стратегії тестування: піраміда тестів~ | [Конспект лекції](lectures/lecture-12.md) | [Презентація](presentations/presentation-12.md) |
-| ~Лекція 13 CI/CD, моніторинг та підтримка якості коду~ | [Конспект лекції](lectures/lecture-13.md) | [Презентація](presentations/presentation-13.md) |
-| ~Лекція 14 Інформаційна безпека в розробці ПЗ~ | [Конспект лекції](lectures/lecture-14.md) | [Презентація](presentations/presentation-14.md) |
-| ~Лекція 15 Рефакторинг та чистий код~ | [Конспект лекції](lectures/lecture-15.md) | [Презентація](presentations/presentation-15.md) |
-| ~Лекція 16 Масштабування та оптимізація продуктивності застосунків~ | [Конспект лекції](lectures/lecture-16.md) | [Презентація](presentations/presentation-16.md) |
+| Лекція 12 Стратегії тестування: піраміда тестів | [Конспект лекції](lectures/lecture-12.md) | [Презентація](presentations/presentation-12.md) |
+| Лекція 13 CI/CD, моніторинг та підтримка якості коду | [Конспект лекції](lectures/lecture-13.md) | [Презентація](presentations/presentation-13.md) |
+| Лекція 14 Інформаційна безпека в розробці ПЗ | [Конспект лекції](lectures/lecture-14.md) | [Презентація](presentations/presentation-14.md) |
+| Лекція 15 Рефакторинг та чистий код | [Конспект лекції](lectures/lecture-15.md) | [Презентація](presentations/presentation-15.md) |
+| Лекція 16 Масштабування та оптимізація продуктивності застосунків | [Конспект лекції](lectures/lecture-16.md) | [Презентація](presentations/presentation-16.md) |
 
 
 
