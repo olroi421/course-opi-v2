@@ -3,13 +3,26 @@
 ## План лекції
 
 1. Основи інформаційної безпеки
-2. Поширені вразливості вебдодатків
-3. Аутентифікація та авторизація
-4. Безпека API
-5. Шифрування та криптографія
-6. Безпека залежностей
-7. Логування та моніторинг
-8. Практичні рекомендації
+2. Поширені вразливості вебзастосунків
+3. Контроль доступу
+4. Автентифікація та авторизація
+5. Безпека API
+6. Шифрування та криптографія
+7. Безпека залежностей і ланцюга постачання
+8. Логування та моніторинг
+9. Безпечне розгортання
+10. Безпека та штучний інтелект
+11. Практичні рекомендації
+
+## Основні поняття
+
+- **Тріада CIA** — конфіденційність, цілісність, доступність
+- **Автентифікація / авторизація** — «хто ви?» / «що вам дозволено?»
+- **Найменші привілеї** — лише необхідні права
+- **Захист в глибину** — кілька незалежних рівнів захисту
+- **Ін'єкція** — дані інтерпретуються як команди
+- **OWASP Top 10** — головні ризики вебзастосунків (редакція 2025)
+- **Ланцюг постачання ПЗ** — усе зовнішнє, що потрапляє у продукт і збірку
 
 ## 1. Основи інформаційної безпеки
 
@@ -31,11 +44,11 @@ graph TB
 **Захист даних від несанкціонованого доступу**
 
 - 🔐 Шифрування даних при передачі та зберіганні
-- 👤 Аутентифікація користувачів
+- 👤 Автентифікація користувачів
 - 🔑 Контроль доступу до ресурсів
 - 🚪 Авторизація на основі ролей
 
-**Приклад:** Лише власник облікового запису може бачити свої особисті дані
+**Приклад:** лише власник облікового запису бачить свої особисті дані
 
 ## Цілісність (Integrity)
 
@@ -46,18 +59,18 @@ graph TB
 - 📝 Журналювання змін
 - 🔄 Версіонування даних
 
-**Приклад:** Банківська транзакція не може бути змінена після виконання
+**Приклад:** банківська транзакція не може бути змінена після виконання
 
 ## Доступність (Availability)
 
 **Забезпечення доступу до ресурсів**
 
-- 🛡️ Захист від DDoS атак
+- 🛡️ Захист від DDoS-атак
 - 💾 Резервне копіювання
 - 🔄 Відмовостійкість системи
 - ⚡ Балансування навантаження
 
-**Приклад:** Вебсайт доступний 24/7 навіть при високому навантаженні
+**Приклад:** вебсайт доступний 24/7 навіть при високому навантаженні
 
 ## Основні принципи безпеки
 
@@ -70,30 +83,47 @@ graph TB
 ### 🏗️ Безпека через дизайн
 Інтеграція безпеки з самого початку
 
-### ❌ Fail-safe defaults
-Відмова в доступі за замовчуванням
+### ❌ Безпечні значення за замовчуванням
+Відмова в доступі, якщо явно не дозволено
+
+## Моделювання загроз: STRIDE
+
+### 🎯 Питання до кожного елемента схеми потоків даних:
+
+- **S**poofing — підміна особи
+- **T**ampering — підробка даних
+- **R**epudiation — відмова від авторства
+- **I**nformation disclosure — розкриття інформації
+- **D**enial of service — відмова в обслуговуванні
+- **E**levation of privilege — підвищення привілеїв
+
+**Півгодини обговорення схеми економлять місяці виправлень**
 
 ## 2. Поширені вразливості
 
-## OWASP Top 10 (2021)
+## OWASP Top 10:2025
 
 ### Найкритичніші ризики безпеки:
 
-1. **Порушення контролю доступу** - Broken Access Control
-2. **Криптографічні збої** - Cryptographic Failures
-3. **Ін'єкції** - Injection
-4. **Небезпечний дизайн** - Insecure Design
-5. **Неправильна конфігурація** - Security Misconfiguration
+1. **Порушення контролю доступу** (тепер включає SSRF)
+2. **Неправильна конфігурація безпеки**
+3. **Збої безпеки ланцюга постачання ПЗ** 🆕
+4. **Криптографічні збої**
+5. **Ін'єкції**
 
-## OWASP Top 10 (продовження)
+## OWASP Top 10:2025 (продовження)
 
-6. **Вразливі компоненти** - Vulnerable Components
-7. **Помилки ідентифікації** - Identification Failures
-8. **Збої цілісності ПЗ** - Software Integrity Failures
-9. **Недостатнє логування** - Logging Failures
-10. **SSRF** - Server-Side Request Forgery
+6. **Небезпечний дизайн**
+7. **Збої автентифікації**
+8. **Збої цілісності ПЗ та даних**
+9. **Збої журналювання та сповіщення**
+10. **Неправильна обробка виняткових ситуацій** 🆕
 
-## SQL Ін'єкції
+### 📈 Тенденція:
+
+Усе більше уваги — конфігурації, процесам і ланцюгу постачання, а не лише помилкам у коді
+
+## SQL-ін'єкції
 
 ### ❌ Небезпечний код:
 
@@ -104,87 +134,135 @@ query = f"SELECT * FROM users WHERE username = '{username}'"
 cursor.execute(query)
 ```
 
-**Атака:** `admin' --` обходить перевірку паролю
+**Атака:** `admin' --` обходить перевірку пароля
 
 ### ✅ Безпечний код:
 
 ```python
 # Параметризований запит
-username = request.form['username']
-query = "SELECT * FROM users WHERE username = ?"
-cursor.execute(query, (username,))
+cursor.execute(
+    "SELECT id, password_hash FROM users WHERE username = ?",
+    (username,),
+)
+# Пароль перевіряємо за хешем, а не в SQL
 ```
 
 ## Cross-Site Scripting (XSS)
 
 ### Типи XSS:
 
-- **Reflected XSS** - шкідливий код у HTTP запиті
-- **Stored XSS** - шкідливий код зберігається на сервері
-- **DOM-based XSS** - вразливість у клієнтському коді
+- **Reflected XSS** — шкідливий код у HTTP-запиті
+- **Stored XSS** — шкідливий код зберігається на сервері
+- **DOM-based XSS** — вразливість у клієнтському коді
 
 ### Захист:
 
 ```python
-# Екранування виводу
-from html import escape
-
-user_input = request.form['comment']
-safe_output = escape(user_input)
+# Шаблонізатор екранує вивід автоматично
+render_template_string(
+    "<div>Привіт, {{ name }}!</div>", name=name
+)
 ```
+
+Обережно з `|safe`, `Markup()`, `dangerouslySetInnerHTML`
+
+## XSS: додаткові рівні захисту
+
+```python
+@app.after_request
+def set_security_headers(response):
+    response.headers["Content-Security-Policy"] = \
+        "default-src 'self'; script-src 'self'"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    return response
+```
+
+- 🛡️ **CSP** — браузер не виконає чужий скрипт
+- 🍪 **HttpOnly** cookies — недоступні для JavaScript
+- 🧼 Очищення HTML від користувача: бібліотека (nh3), а не власний фільтр
 
 ## Cross-Site Request Forgery (CSRF)
 
 ```mermaid
 sequenceDiagram
-    participant User
-    participant Malicious
-    participant Bank
+    participant U as Користувач
+    participant M as Шкідливий сайт
+    participant B as Банк
 
-    User->>Bank: Авторизація
-    Bank->>User: Встановлює cookie
-    User->>Malicious: Відкриває шкідливий сайт
-    Malicious->>Bank: Відправляє запит з cookie користувача
-    Bank->>Bank: Виконує операцію
+    U->>B: Авторизація
+    B->>U: Встановлює cookie
+    U->>M: Відкриває шкідливий сайт
+    M->>B: Запит з cookie користувача
+    B->>B: Виконує операцію
 ```
 
-### Захист - CSRF токени:
+### Захист — CSRF-токени + SameSite:
 
 ```python
-csrf_token = generate_token()
-session['csrf_token'] = csrf_token
-
-# Перевірка при обробці форми
-if request.form['csrf_token'] != session['csrf_token']:
+if not hmac.compare_digest(
+    request.form.get('csrf_token', ''),
+    session.get('csrf_token', ''),
+):
     abort(403)
 ```
 
-## 3. Аутентифікація та авторизація
+## 3. Контроль доступу
+
+## Порушення контролю доступу
+
+### 🥇 #1 в OWASP
+
+**Помилка:** система не перевіряє, чи має *цей* користувач право на *цей* об'єкт
+
+```python
+@app.get("/api/orders/<int:order_id>")
+@login_required
+def get_order(order_id):
+    order = db.get_or_404(Order, order_id)
+    if order.user_id != current_user.id \
+            and current_user.role != "admin":
+        abort(404)
+    return jsonify(order.to_dict())
+```
+
+- **BOLA / IDOR** — перебір чужих ідентифікаторів
+- **SSRF** — сервер звертається за URL зловмисника → список дозволених адрес
+
+## 4. Автентифікація та авторизація
 
 ## Безпечне зберігання паролів
 
 ### ❌ НІКОЛИ не робіть так:
 
 - Паролі у відкритому вигляді
-- MD5 або SHA1 хеш
+- MD5, SHA-1, SHA-256 «просто так»
 - Звичайне шифрування
 
 ### ✅ Правильний підхід:
 
 ```python
-from werkzeug.security import generate_password_hash
+from argon2 import PasswordHasher
 
-# Хешування з salt
-hashed = generate_password_hash(
-    password,
-    method='pbkdf2:sha256',
-    salt_length=16
-)
+ph = PasswordHasher()
+hash_value = ph.hash(password)
+ph.verify(hash_value, password)
 ```
 
-**Використовуйте:** bcrypt, Argon2, PBKDF2
+**Використовуйте:** Argon2id, scrypt, bcrypt, PBKDF2 (Werkzeug за замовчуванням — scrypt)
 
-## Багатофакторна аутентифікація (MFA)
+**Оновлюйте хеш** при вході: `check_needs_rehash`
+
+## Сучасні рекомендації щодо паролів
+
+### 📋 NIST SP 800-63B:
+
+- ✅ Довжина важливіша за «складність»
+- ✅ Перевірка на скомпрометовані паролі
+- ✅ Дозволяти вставлення з менеджерів паролів
+- ❌ Немає примусової зміни без ознак компрометації
+- ❌ Немає правил «велика літера + цифра + спецсимвол»
+
+## Багатофакторна автентифікація (MFA)
 
 ### Три фактори:
 
@@ -192,10 +270,12 @@ hashed = generate_password_hash(
    - Пароль, PIN
 
 2. **Щось, що ви маєте** 📱
-   - Смартфон, токен
+   - Смартфон, апаратний ключ
 
 3. **Щось, що ви є** 👤
    - Відбиток пальця, обличчя
+
+### ⚠️ Надійність: SMS < TOTP < апаратні ключі / passkeys
 
 ## Time-based OTP (TOTP)
 
@@ -210,27 +290,47 @@ totp = pyotp.TOTP(secret)
 is_valid = totp.verify(user_code, valid_window=1)
 ```
 
-**Популярні додатки:** Google Authenticator, Authy, 1Password
+**Застосунки:** Google Authenticator, Authy, 1Password
 
-## OAuth 2.0 Flow
+**Секрет зберігайте зашифрованим, обмежуйте кількість спроб**
+
+## Passkeys і WebAuthn
+
+### 🔑 Вхід без пароля:
+
+- Пристрій створює **пару ключів** для сайту
+- Приватний ключ **ніколи не залишає пристрою**
+- Сервер зберігає лише відкритий ключ
+
+### ✅ Переваги:
+
+- Немає секрету, який можна викрасти з бази даних
+- Прив'язка до домену → **стійкість до фішингу**
+- Розблокування біометрією або PIN
+
+**Реалізація:** перевірені бібліотеки (наприклад, py_webauthn)
+
+## OAuth 2.0: Authorization Code Flow
 
 ```mermaid
 sequenceDiagram
-    participant User
-    participant App
-    participant OAuth
-    participant API
+    participant U as Користувач
+    participant A as Застосунок
+    participant O as Сервер авторизації
+    participant R as API
 
-    User->>App: Натискає "Увійти через Google"
-    App->>OAuth: Перенаправлення на авторизацію
-    OAuth->>User: Запит дозволу
-    User->>OAuth: Надає дозвіл
-    OAuth->>App: Authorization code
-    App->>OAuth: Обмін code на access token
-    OAuth->>App: Access token
-    App->>API: Запит даних з token
-    API->>App: Дані користувача
+    U->>A: Натискає "Увійти через Google"
+    A->>O: Перенаправлення на авторизацію
+    O->>U: Запит дозволу
+    U->>O: Надає дозвіл
+    O->>A: Authorization code
+    A->>O: Обмін code на access token
+    O->>A: Access token
+    A->>R: Запит даних з токеном
+    R->>A: Дані користувача
 ```
+
+**Використовуйте PKCE. Implicit Flow — застарілий** (OAuth 2.1)
 
 ## JSON Web Token (JWT)
 
@@ -241,23 +341,40 @@ header.payload.signature
 ```
 
 **Header:** тип токена та алгоритм
-**Payload:** дані (claims)
+**Payload:** дані (claims) — лише закодовані, не зашифровані
 **Signature:** перевірка цілісності
 
 ### Приклад:
 
 ```python
 import jwt
+from datetime import datetime, timedelta, timezone
 
-payload = {
-    'user_id': 123,
-    'exp': datetime.utcnow() + timedelta(hours=1)
-}
+now = datetime.now(timezone.utc)
+payload = {'sub': str(user.id), 'exp': now + timedelta(minutes=15)}
 
 token = jwt.encode(payload, secret_key, algorithm='HS256')
+jwt.decode(token, secret_key, algorithms=['HS256'])
 ```
 
-## 4. Безпека API
+## JWT: правила безпеки
+
+### ✅ Робіть:
+
+- Короткий термін життя (15 хв – 1 год)
+- Явно вказуйте `algorithms=[...]` при перевірці
+- Асиметричні алгоритми (RS256, EdDSA) для багатьох сервісів
+
+### ❌ Не робіть:
+
+- Чутливі дані в payload
+- «JWT у localStorage» — вразливо до XSS
+
+### 💡 Пам'ятайте:
+
+Токен важко відкликати. Для простих вебзастосунків сесії в захищеному cookie часто безпечніші
+
+## 5. Безпека API
 
 ## Контроль доступу (RBAC)
 
@@ -266,6 +383,7 @@ token = jwt.encode(payload, secret_key, algorithm='HS256')
 ```python
 def require_role(*roles):
     def decorator(f):
+        @wraps(f)
         def wrapper(*args, **kwargs):
             user = get_current_user()
             if user.role not in roles:
@@ -274,11 +392,13 @@ def require_role(*roles):
         return wrapper
     return decorator
 
-@app.route('/admin/users')
+@app.get('/admin/users')
 @require_role('admin')
 def get_all_users():
     return jsonify(users)
 ```
+
+**Роль ≠ належність об'єкта** — перевіряйте обидва
 
 ## Rate Limiting
 
@@ -286,23 +406,25 @@ def get_all_users():
 
 ```python
 from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 limiter = Limiter(
-    app,
-    default_limits=["200 per day", "50 per hour"]
+    key_func=get_remote_address,
+    app=app,
+    default_limits=["200 per day", "50 per hour"],
+    storage_uri="redis://localhost:6379",
 )
 
-@app.route('/api/login')
+@app.post('/api/login')
 @limiter.limit("5 per minute")
 def login():
-    # Максимум 5 спроб входу за хвилину
-    pass
+    ...
 ```
 
 **Захист від:**
 - 🛡️ Brute force атак
 - 📊 Зловживання API
-- 💥 DDoS атак
+- 💥 DDoS-атак
 
 ## Валідація вхідних даних
 
@@ -317,18 +439,17 @@ class UserSchema(Schema):
         validate=validate.Length(min=3, max=50)
     )
     email = fields.Email(required=True)
-    age = fields.Int(
-        validate=validate.Range(min=18, max=120)
-    )
+    age = fields.Int(validate=validate.Range(min=18, max=120))
 
-# Валідація
 try:
     data = schema.load(request.json)
 except ValidationError as err:
     return jsonify(err.messages), 400
 ```
 
-## 5. Шифрування
+**Також:** Pydantic; захист від масового присвоєння (`"role": "admin"`)
+
+## 6. Шифрування
 
 ## HTTPS обов'язково!
 
@@ -336,20 +457,20 @@ except ValidationError as err:
 
 ```nginx
 server {
-    listen 443 ssl http2;
+    listen 443 ssl;
+    http2 on;
 
-    ssl_certificate /path/cert.pem;
-    ssl_certificate_key /path/key.pem;
+    ssl_certificate /path/fullchain.pem;
+    ssl_certificate_key /path/privkey.pem;
 
     ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers HIGH:!aNULL:!MD5;
 
     add_header Strict-Transport-Security
         "max-age=31536000" always;
 }
 ```
 
-**Використовуйте:** Let's Encrypt для безкоштовних сертифікатів
+**Використовуйте:** Let's Encrypt + автоматичне поновлення (ACME, Certbot); шифри — за генератором Mozilla
 
 ## Шифрування даних у спокої
 
@@ -361,15 +482,15 @@ key = Fernet.generate_key()
 cipher = Fernet(key)
 
 # Шифрування
-sensitive_data = "Секретна інформація"
-encrypted = cipher.encrypt(sensitive_data.encode())
+encrypted = cipher.encrypt("Секретна інформація".encode())
 
-# Дешифрування
-decrypted = cipher.decrypt(encrypted)
-original = decrypted.decode()
+# Розшифрування
+original = cipher.decrypt(encrypted).decode()
 ```
 
-**Важливо:** Зберігайте ключі окремо від даних!
+**Важливо:** ключі — окремо від даних (KMS, Vault)
+
+**Найкраще — не зберігати:** картки обробляє платіжний провайдер
 
 ## Цифрові підписи
 
@@ -380,26 +501,30 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 
 # Генерація ключів
 private_key = rsa.generate_private_key(
-    public_exponent=65537,
-    key_size=2048
+    public_exponent=65537, key_size=3072
 )
 public_key = private_key.public_key()
 
-# Підпис даних приватним ключем
+# Підпис приватним ключем
 signature = private_key.sign(message, padding, hash_algo)
 
-# Перевірка підпису публічним ключем
-public_key.verify(signature, message, padding, hash_algo)
+# Перевірка відкритим ключем
+try:
+    public_key.verify(signature, message, padding, hash_algo)
+except InvalidSignature:
+    ...
 ```
 
-## 6. Безпека залежностей
+**Сучасна альтернатива:** Ed25519
+
+## 7. Залежності та ланцюг постачання
 
 ## Сканування вразливостей
 
 ### Python:
 ```bash
-pip install safety
-safety check
+pip install pip-audit
+pip-audit -r requirements.txt
 ```
 
 ### Node.js:
@@ -415,8 +540,25 @@ npm audit fix
 - name: Security scan
   run: |
     npm audit
-    python -m safety check
+    pip-audit -r requirements.txt
 ```
+
+**Ще:** OSV-Scanner, Dependabot, Renovate
+
+## Безпека ланцюга постачання
+
+### 🎯 Атакують не ваш код, а компоненти, яким ви довіряєте
+
+- 🕳️ Прихована шкідлива вставка (приклад: xz, 2024)
+- 📦 Компрометація популярних пакетів
+- 🎭 Typosquatting — пакети з подібними назвами
+- 🤖 Вигадані ШІ назви пакетів, які реєструють зловмисники
+
+### ✅ Захист:
+
+- Lock-файли й фіксовані версії
+- **SBOM** — перелік складників
+- Дії CI — за хешем коміту, мінімальні права
 
 ## Принцип мінімальних залежностей
 
@@ -430,13 +572,13 @@ npm audit fix
 
 **Кожна залежність = потенційна вразливість**
 
-## 7. Логування та моніторинг
+## 8. Логування та моніторинг
 
 ## Що логувати
 
 ### ✅ Важливі події безпеки:
 
-- 🔐 Спроби аутентифікації (успішні та ні)
+- 🔐 Спроби автентифікації (успішні та ні)
 - 🔑 Зміни прав доступу
 - 📊 Доступ до чутливих даних
 - ⚠️ Помилки валідації
@@ -449,6 +591,8 @@ npm audit fix
 - Номери кредитних карток
 - Особисті дані (без необхідності)
 
+**Логувати мало — треба ще й сповіщати**
+
 ## Приклад безпекового логування
 
 ```python
@@ -458,69 +602,137 @@ security_logger = logging.getLogger('security')
 
 def log_security_event(event_type):
     def decorator(f):
+        @wraps(f)
         def wrapper(*args, **kwargs):
-            user = get_current_user()
-            ip = request.remote_addr
-
             security_logger.info(
-                f"Event: {event_type}, "
-                f"User: {user.id}, "
-                f"IP: {ip}"
+                "Event: %s, User: %s, IP: %s",
+                event_type, get_current_user_id(),
+                request.remote_addr,
             )
-
             return f(*args, **kwargs)
         return wrapper
     return decorator
 
-@app.route('/admin/users')
+@app.get('/admin/users')
 @log_security_event('ADMIN_ACCESS')
 def admin_panel():
     return render_template('admin.html')
 ```
 
+**Параметри форматування** захищають від ін'єкції в лог
+
 ## Моніторинг аномалій
 
-### Детектор brute force атак:
+### Детектор brute force атак (навчальний):
 
 ```python
-from collections import defaultdict
-from datetime import datetime, timedelta
-
 failed_attempts = defaultdict(list)
 
 def check_brute_force(username, ip):
     key = f"{username}:{ip}"
     now = datetime.now()
 
-    # Видаляємо старі спроби
     failed_attempts[key] = [
         t for t in failed_attempts[key]
         if now - t < timedelta(minutes=5)
     ]
-
-    # Додаємо поточну спробу
     failed_attempts[key].append(now)
 
-    # Перевірка порогу
     if len(failed_attempts[key]) > 5:
-        logger.warning(f"Brute force: {username} from {ip}")
+        security_logger.warning(
+            "Brute force: %s from %s", username, ip
+        )
         return True
-
     return False
 ```
 
-## 8. Практичні рекомендації
+⚠️ У реальній системі лічильник — у спільному сховищі (Redis)
+
+## 9. Безпечне розгортання
+
+## Безпечна конфігурація
+
+```python
+class Config:
+    # Секрети — зі змінних середовища; без значення — зупинка
+    SECRET_KEY = os.environ["SECRET_KEY"]
+
+    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = 'Lax'
+
+    WTF_CSRF_ENABLED = True
+    PERMANENT_SESSION_LIFETIME = timedelta(hours=1)
+
+class ProductionConfig(Config):
+    DEBUG = False
+```
+
+- ❌ Не `os.environ.get(...) or os.urandom(32)` — сесії ламаються
+- 🔍 Сканери секретів: gitleaks, TruffleHog, push protection
+
+## Безпека контейнерів
+
+```dockerfile
+FROM python:3.14-slim
+
+RUN useradd -m -u 1000 appuser
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY --chown=appuser:appuser . .
+USER appuser
+
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app:app"]
+```
+
+- ✅ Непривілейований користувач, мінімальний образ
+- ✅ Багатоетапна збірка, `.dockerignore`
+- ✅ Сканування образів: Trivy, Docker Scout
+
+## 10. Безпека та ШІ
+
+## Код від ШІ-асистентів
+
+### ⚠️ Ризики:
+
+- Небезпечні шаблони (конкатенація SQL, слабка криптографія)
+- Застарілі бібліотеки
+- Вигадані назви пакетів
+
+### ✅ Правила:
+
+- Перевіряйте як код колеги
+- Автоматичні перевірки в конвеєрі — обов'язкові
+- Не передавайте секрети й персональні дані асистентам
+
+## Застосунки з LLM
+
+### 🤖 OWASP Top 10 for LLM Applications
+
+**Prompt injection** — інструкція, схована в даних, які обробляє модель
+
+### 🛡️ Захист:
+
+- Найменші привілеї для моделі
+- Чутливі дії — лише з підтвердженням людини
+- Відповіді моделі — недовірений ввід
+
+## 11. Практичні рекомендації
 
 ## Security Checklist для розробників
 
 ### Базові практики:
 
-- ✅ Всі дані валідуються на сервері
+- ✅ Усі дані валідуються на сервері
 - ✅ HTTPS для всього трафіку
-- ✅ Паролі хешуються (bcrypt/Argon2)
-- ✅ CSRF захист для форм
-- ✅ Параметризовані SQL запити
-- ✅ Екранування користувацького вмісту
+- ✅ Паролі хешуються (Argon2id / scrypt / bcrypt)
+- ✅ CSRF-захист для форм
+- ✅ Параметризовані SQL-запити
+- ✅ Екранування вмісту + CSP
+- ✅ Перевірка прав на кожен об'єкт
 - ✅ Rate limiting для API
 - ✅ Логування безпекових подій
 
@@ -528,13 +740,14 @@ def check_brute_force(username, ip):
 
 ### Розширені практики:
 
-- ✅ MFA для адміністраторів
-- ✅ Регулярне сканування залежностей
+- ✅ MFA або passkeys
+- ✅ Регулярне сканування залежностей, SBOM
 - ✅ Security headers (CSP, HSTS)
 - ✅ Принцип найменших привілеїв
-- ✅ Секрети у змінних середовища
-- ✅ Debug вимкнений у production
-- ✅ Регулярні security audits
+- ✅ Секрети у змінних середовища або Vault
+- ✅ Debug вимкнений у продакшені
+- ✅ SAST + SCA + DAST у конвеєрі
+- ✅ Регулярні аудити безпеки
 
 ## Типові помилки
 
@@ -545,17 +758,19 @@ def check_brute_force(username, ip):
 3. Використовувати слабкі алгоритми шифрування
 4. Ігнорувати оновлення залежностей
 5. Жорстко кодувати секрети в коді
-6. Відключати CSRF захист "тому що не працює"
-7. Використовувати `eval()` з користувацьким вводом
+6. Вимикати CSRF-захист «бо не працює»
+7. Використовувати `eval()` із введенням користувача
+8. Виконувати зміну стану через GET
 
 ## Культура безпеки
 
-### 🎯 Безпека - відповідальність всієї команди
+### 🎯 Безпека — відповідальність усієї команди
 
 - 📚 Регулярне навчання
-- 👀 Security-focused code review
+- 👀 Рецензування коду з погляду безпеки
 - 🤖 Автоматизоване тестування безпеки
-- 📊 Моніторинг та алерти
+- 📊 Моніторинг та сповіщення
 - 🔄 Постійне покращення
+- ⚖️ Правові вимоги: закон про захист персональних даних, GDPR, Cyber Resilience Act
 
-**Правило:** Якщо щось виглядає підозріло - воно підозріле!
+**Правило:** якщо щось виглядає підозріло — воно підозріле!
