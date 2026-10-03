@@ -41,7 +41,7 @@
 - реляційна СКБД SQLite [sqlite.org](https://sqlite.org/)
 - GitHub Desktop [desktop.github.com](https://desktop.github.com) - графічний клієнт Git (опціонально);
 - мова програмування Python [https://www.python.org/](https://www.python.org/);
-- клієнт для тестування API [Postman](https://www.postman.com/) (безкоштовний план з 2026 року розрахований на одного користувача — кожен учасник команди працює у власному обліковому записі й експортує колекцію у файл) або безкоштовна альтернатива без реєстрації [Bruno](https://www.usebruno.com/);
+- клієнт для тестування API [Postman](https://www.postman.com/) (безкоштовний план розрахований на одного користувача — кожен учасник команди працює у власному обліковому записі й експортує колекцію у файл) або безкоштовна альтернатива без реєстрації [Bruno](https://www.usebruno.com/);
 - бібліотека документування API [flasgger](https://github.com/flasgger/flasgger) (для рівня 2);
 - вебфреймворк Flask [https://flask.palletsprojects.com](https://flask.palletsprojects.com).
 
