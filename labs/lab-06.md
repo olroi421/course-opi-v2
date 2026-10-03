@@ -1,8 +1,8 @@
-# Лабораторна робота 06 Інтеграція фронтенду з API та обробка помилок
+# Лабораторна робота 06 Інтеграція клієнтської частини з API та обробка помилок
 
 ## 🎯 Мета роботи
 
-Навчитись підключати frontend до створеного API, виконувати базові операції отримання та відправки даних, розуміти як працює асинхронний JavaScript.
+Навчитись підключати клієнтську частину (frontend) до створеного API, виконувати базові операції отримання та відправки даних, розуміти як працює асинхронний JavaScript.
 
 ## ✅ Завдання
 
@@ -13,8 +13,8 @@
 - показує повідомлення про успіх або помилку;
 - має базове оформлення.
 
-!!! tip "Увага"
-    Ця лабораторна використовує API, створений у лабораторній роботі 5. Переконайтесь, що ваш API запущений і працює.
+> [!IMPORTANT]
+> Ця лабораторна використовує API, створений у лабораторній роботі 5. Переконайтесь, що ваш API запущений і працює.
 
 ## 🖥️ Програмне забезпечення
 
@@ -24,7 +24,9 @@
 - реляційна СКБД SQLite [sqlite.org](https://sqlite.org/)
 - GitHub Desktop [desktop.github.com](https://desktop.github.com) - графічний клієнт Git (опціонально);
 - мова програмування Python [https://www.python.org/](https://www.python.org/);
-- вебфреймворк Flask [https://flask.palletsprojects.com](https://flask.palletsprojects.com).
+- вебфреймворк Flask [https://flask.palletsprojects.com](https://flask.palletsprojects.com);
+- розширення Flask-CORS [flask-cors.readthedocs.io](https://flask-cors.readthedocs.io) (потрібне лише якщо сторінка відкривається не з того самого Flask-сервера, див. крок 3);
+- сучасний браузер з інструментами розробника (Chrome, Firefox, Edge).
 
 ## 👥 Форма виконання роботи
 
@@ -50,7 +52,7 @@
 
 **Асинхронність** означає, що JavaScript може відправити запит на сервер і продовжити працювати, не чекаючи відповіді. Коли дані прийдуть, спеціальна функція їх обробить.
 
-### Промiси (Promises)
+### Проміси (Promises)
 
 Promise — це обіцянка, що дані прийдуть у майбутньому. У промісу є три стани:
 
@@ -71,7 +73,7 @@ fetch('https://api.example.com/data')
 Замість `.then()` можна використовувати `async` та `await`. Це робить код схожим на звичайний, хоча він все одно асинхронний.
 
 ```javascript
-async function getDat() {
+async function getData() {
     const response = await fetch('https://api.example.com/data');
     const data = await response.json();
     console.log(data);
@@ -85,10 +87,15 @@ async function getDat() {
 `fetch()` — це функція для відправки HTTP запитів. Найпростіший варіант:
 
 ```javascript
-fetch('http://localhost:5000/api/items')
+fetch('/api/items')
 ```
 
-Це відправить GET запит (запит на отримання даних) на вказану адресу.
+Це відправить GET запит (запит на отримання даних) на вказану адресу. Якщо сторінку віддає той самий Flask-сервер, що й API, достатньо відносної адреси (`/api/items`); повна адреса (`http://127.0.0.1:5000/api/items`) потрібна лише тоді, коли сторінка відкривається з іншого джерела.
+
+> [!WARNING]
+> **Важливо: fetch() не вважає код 404 чи 500 помилкою**
+>
+> Проміс від `fetch()` відхиляється лише тоді, коли сервер взагалі недоступний (немає мережі, сервер не запущено). Якщо сервер відповів з кодом 400, 404 або 500, `fetch()` вважає це успіхом. Тому завжди перевіряйте властивість `response.ok` (вона дорівнює `true` для кодів 200–299).
 
 ### HTTP методи
 
@@ -100,7 +107,7 @@ fetch('http://localhost:5000/api/items')
 Для GET не потрібно нічого додаткового. Для POST потрібно вказати, які дані відправляємо:
 
 ```javascript
-fetch('http://localhost:5000/api/items', {
+fetch('/api/items', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -135,17 +142,33 @@ const json = '{"name":"Книга"}';
 const obj = JSON.parse(json);
 ```
 
+### CORS — політика спільного доступу до ресурсів
+
+Браузер з міркувань безпеки дозволяє JavaScript-коду сторінки звертатися лише до того самого **джерела** (origin), з якого завантажено сторінку. Джерело складається з протоколу, домену та порту: `http://127.0.0.1:5000` і `http://localhost:5000` — це різні джерела, так само як `http://127.0.0.1:5000` і `http://127.0.0.1:5500`.
+
+Якщо сторінка і API мають різні джерела, сервер має явно дозволити такий доступ спеціальними заголовками — це і є механізм CORS (Cross-Origin Resource Sharing). У Flask ці заголовки додає розширення Flask-CORS.
+
+## 🟣 Ресурси
+
+- [Проміси, async/await — Сучасний підручник з JavaScript](https://uk.javascript.info/async)
+- [Fetch — Сучасний підручник з JavaScript](https://uk.javascript.info/fetch)
+- [Using the Fetch API — MDN](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
+- [Cross-Origin Resource Sharing (CORS) — MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS)
+- [Flask-CORS — документація](https://flask-cors.readthedocs.io/)
+- [Inspect network activity — Chrome DevTools](https://developer.chrome.com/docs/devtools/network)
+- [JavaScript fetch www.youtube.com](https://www.youtube.com/results?search_query=javascript+fetch+async+await)
+
 ## ▶️ Хід роботи
 
-Приклад виконання лабораторної роботи ([:fontawesome-solid-archive: навчальний додаток](assets/lab06-flaskProject2API-frontend.zip){: download="lab06-flaskProject2API-frontend.zip" })
+Приклад виконання лабораторної роботи ([📦 навчальний додаток](assets/lab06-flaskProject2API-frontend.zip))
 
 
-### Крок 1. Підготовка проєкту
+### 1. Підготовка проєкту
 
 1. **Переконайтесь що ваш API працює**
    - Запустіть ваш Flask додаток з лабораторної роботи 5
    - Перевірте в браузері або Postman, що ендпоінти відповідають
-   - Запишіть базову адресу API (наприклад: `http://localhost:5000/api`)
+   - Запишіть базову адресу API (наприклад: `http://127.0.0.1:5000/api`)
 
 2. **Визначте структуру вашого API**
    - Які ендпоінти у вас є? (наприклад: `/api/products`, `/api/orders`, `/api/feedback`)
@@ -153,24 +176,63 @@ const obj = JSON.parse(json);
    - Які операції підтримуються? (GET, POST, PUT, DELETE)
 
 
-### Крок 2. Створіть HTML структуру та JavaScript логіку для фронтенду
+### 2. Створіть HTML структуру та JavaScript логіку для клієнтської частини
 
-Створіть демонастраційний файл `api-demo.html` на основі шаблону `base.html` для демонстрації роботи API.
+Створіть демонстраційний шаблон `templates/api-demo.html` на основі шаблону `base.html` та маршрут, який його показує:
+
+```python
+@app.route('/api-demo')
+def api_demo():
+    return render_template('api-demo.html')
+```
 
 **Важливо:** Адаптуйте структуру сторінки під ваші дані. Наприклад:
+
 - Для продуктів: `name`, `price`, `description`
 - Для відгуків: `name`, `email`, `message`
 - Для замовлень: `customer_name`, `address`, `phone`
 
-Для створення повноцінного фронтенду додайте JavaScript логіку для роботи з API. Наприклад:
+Мінімальна HTML-структура сторінки (елементи з цими `id` використовує JavaScript-код нижче):
+
+```html
+{% extends "base.html" %}
+{% block content %}
+<h1>Демонстрація роботи API</h1>
+
+<div id="message"></div>
+<div id="loading">⏳ Завантаження...</div>
+
+<form id="addForm">
+    <input id="field1" placeholder="Назва" required>
+    <input id="field2" placeholder="Опис">
+    <button type="submit">Додати</button>
+</form>
+
+<div id="dataList"></div>
+
+<style>
+    #loading, #message { display: none; }
+    #loading.show, #message.show { display: block; }
+    #message.success { color: green; }
+    #message.error { color: red; }
+</style>
+
+<script src="{{ url_for('static', filename='js/api-demo.js') }}"></script>
+{% endblock %}
+```
+
+Тег `<script>` розміщено **після** HTML-елементів, тому на момент виконання скрипта всі елементи вже існують на сторінці.
+
+Для створення повноцінної клієнтської частини додайте JavaScript логіку для роботи з API у файл `static/js/api-demo.js`. Наприклад:
 
 ```javascript
 // ============================================
 // НАЛАШТУВАННЯ - ЗМІНІТЬ ПІД СВІЙ ПРОЄКТ
 // ============================================
 
-// ВАЖЛИВО: Вкажіть адресу ВАШОГО API
-const API_URL = 'http://localhost:5000/api/your-endpoint';
+// ВАЖЛИВО: Вкажіть адресу ВАШОГО API.
+// Якщо сторінку віддає той самий Flask-сервер, достатньо відносної адреси.
+const API_URL = '/api/your-endpoint';
 
 // ============================================
 // ДОПОМІЖНІ ФУНКЦІЇ
@@ -188,6 +250,18 @@ function showMessage(text, type) {
     setTimeout(() => messageBox.classList.remove('show'), 5000);
 }
 
+/**
+ * Отримує текст помилки з відповіді сервера (якщо API повертає {"error": "..."})
+ */
+async function getErrorText(response) {
+    try {
+        const body = await response.json();
+        return body.error || `HTTP помилка! Статус: ${response.status}`;
+    } catch {
+        return `HTTP помилка! Статус: ${response.status}`;
+    }
+}
+
 // ============================================
 // РОБОТА З API
 // ============================================
@@ -202,7 +276,7 @@ async function loadData() {
         const response = await fetch(API_URL);
 
         if (!response.ok) {
-            throw new Error(`HTTP помилка! Статус: ${response.status}`);
+            throw new Error(await getErrorText(response));
         }
 
         const data = await response.json();
@@ -233,7 +307,7 @@ async function addItem(itemData) {
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP помилка! Статус: ${response.status}`);
+            throw new Error(await getErrorText(response));
         }
 
         showMessage('✅ Запис успішно додано!', 'success');
@@ -272,12 +346,16 @@ function displayData(items) {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'item';
 
-        // ВАЖЛИВО: Змініть item.field1, item.field2 на реальні поля вашого API
-        itemDiv.innerHTML = `
-            <h3>${item.field1 || 'Без назви'}</h3>
-            <p>${item.field2 || 'Без опису'}</p>
-        `;
+        // ВАЖЛИВО: Змініть item.field1, item.field2 на реальні поля вашого API.
+        // Дані від користувача вставляємо через textContent, а не innerHTML:
+        // так введений у форму HTML-код не виконається на сторінці.
+        const title = document.createElement('h3');
+        title.textContent = item.field1 || 'Без назви';
 
+        const text = document.createElement('p');
+        text.textContent = item.field2 || 'Без опису';
+
+        itemDiv.append(title, text);
         container.appendChild(itemDiv);
     });
 }
@@ -316,47 +394,50 @@ document.getElementById('addForm').addEventListener('submit', async (event) => {
 // ІНІЦІАЛІЗАЦІЯ
 // ============================================
 
-window.addEventListener('load', () => {
-    loadData();
-});
+loadData();
 ```
 
-### Крок 3. Налаштуйте CORS у вашому API
+### 3. Налаштуйте CORS у вашому API (за потреби)
 
-Щоб frontend міг підключитись до API, переконайтесь що у вашому Flask додатку є підтримка CORS:
+Якщо сторінка `api-demo.html` відкривається через ваш Flask-сервер (як у кроці 2), сторінка і API мають одне джерело — **CORS налаштовувати не потрібно**.
+
+CORS потрібен, якщо клієнтська частина відкривається з іншого джерела: окремим файлом `index.html`, через розширення Live Server у VS Code (порт 5500) тощо. У такому разі додайте підтримку CORS у Flask:
 
 ```python
 from flask import Flask
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # Дозволяємо доступ до API
-
-# Або більш обмежений варіант:
-# CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app, resources={r"/api/*": {"origins": "*"}})  # Дозволяємо доступ лише до адрес /api/...
 ```
 
-Встановіть flask-cors якщо потрібно:
+Встановіть flask-cors та оновіть список залежностей:
+
 ```bash
 pip install flask-cors
+pip freeze > requirements.txt
 ```
 
-### Крок 4. Тестування
+### 4. Тестування
 
 1. **Запустіть API** - переконайтесь що він працює
-2. **Перевірте Console** (F12) на наявність помилок
-3. **Протестуйте функціональність:**
+2. **Відкрийте сторінку** `http://127.0.0.1:5000/api-demo`
+3. **Перевірте Console** (F12) на наявність помилок
+4. **Протестуйте функціональність:**
    - Чи завантажуються дані?
    - Чи можна додати новий ресурс?
    - Чи показуються повідомлення?
+   - Що бачить користувач, якщо зупинити сервер і оновити список? (має з'явитися зрозуміле повідомлення про помилку)
 
-### Крок 5. Налагодження
+### 5. Налагодження
 
 **Відкрийте інструменти розробника:**
+
 - Windows/Linux: `F12` або `Ctrl+Shift+I`
 - Mac: `Cmd+Option+I`
 
 **Важливі вкладки:**
+
 - **Console** - помилки JavaScript
 - **Network** - HTTP запити до API
 - **Elements** - HTML структура
@@ -367,13 +448,13 @@ pip install flask-cors
    ```
    Access to fetch has been blocked by CORS policy
    ```
-   Рішення: додайте `CORS(app)` у Flask
+   Рішення: сторінка і API мають різні джерела. Відкривайте сторінку через Flask-сервер або налаштуйте Flask-CORS (крок 3). Пам'ятайте, що `localhost` і `127.0.0.1` браузер вважає різними джерелами.
 
 2. **404 Not Found**
    ```
-   GET http://localhost:5000/api/endpoint 404
+   GET http://127.0.0.1:5000/api/endpoint 404
    ```
-   Рішення: перевірте правильність URL
+   Рішення: перевірте правильність URL і назву маршруту у Flask
 
 3. **Network Error**
    ```
@@ -381,81 +462,24 @@ pip install flask-cors
    ```
    Рішення: переконайтесь що API запущений
 
-### Крок 6. Підготовка звіту і захист (README.md)
+4. **403 Forbidden на macOS**
 
-Створіть файл `README.md` з наступною структурою:
+   Порт 5000 у macOS займає служба AirPlay Receiver. Вимкніть її в системних налаштуваннях або запустіть Flask на іншому порту (`app.run(port=5001)`) і змініть адресу API.
 
-```markdown
-    # Лабораторна робота 6
+5. **Cannot read properties of null (reading 'addEventListener')**
 
-    **Студент:** Ваше ім'я
-    **Група:** Назва групи
+   Скрипт виконується раніше, ніж на сторінці з'явилася форма, або `id` елемента в HTML не збігається з `id` у JavaScript. Підключайте скрипт наприкінці сторінки та перевірте назви.
 
-    ## 📋 Опис проєкту
+### 6. Підготовка звіту і захист (README.md)
 
-    Коротко опишіть що робить ваш застосунок (2-3 речення).
+Створіть у корені проєкту файл `README.md`. Рекомендована структура звіту:
 
-
-    ## 📁 Структура проєкту
-
-    ```
-    project/
-    ├── index.html       # Головна сторінка
-    ├── style.css        # Стилі
-    ├── script.js        # JavaScript логіка
-    ├── README.md        # Цей файл
-    └── backend/         # Flask API (з лаб. роботи 5)
-        ├── app.py
-        └── ...
-    ```
-
-    ## 🔌 API Endpoints
-
-    Опишіть які ендпоінти використовуються:
-
-    ### GET /api/your-endpoint
-    Отримує список всіх записів.
-
-    **Відповідь:**
-    ```json
-    [
-      {
-        "id": 1,
-        "field1": "значення",
-        "field2": "значення"
-      }
-    ]
-    ```
-
-    ### POST /api/your-endpoint
-    Створює новий запис.
-
-    **Тіло запиту:**
-    ```json
-    {
-      "field1": "значення",
-      "field2": "значення"
-    }
-    ```
-
-    ## 📸 Скріншоти
-
-    ### Головна сторінка
-    ![Скріншот головної сторінки](screenshots/main.png)
-
-    ### Додавання запису
-    ![Скріншот форми](screenshots/add-form.png)
-
-    ### Повідомлення про успіх
-    ![Скріншот повідомлення](screenshots/success.png)
-
-    ## 🔗 Посилання
-    - [Посилання на GitHub](https://github.com/username/repo)
-
-    ## ✅ Висновки
-
-    Коротко опишіть що ви навчились робити в цій лабораторній роботі (3-5 речень).
-```
+- назва проєкту, склад команди;
+- короткий опис демонстраційної сторінки (2–3 речення);
+- які ендпоінти API використовує сторінка і з якими полями;
+- де в проєкті розміщено HTML-шаблон і JavaScript-файл;
+- скріншоти: список даних, додавання запису, повідомлення про успіх і про помилку;
+- висновки (3–5 речень).
 
 Як відповідь на завдання в LMS Moodle дати посилання на репозиторій з проєктом. Захистити лабораторну перед викладачем.
 
@@ -469,4 +493,4 @@ pip install flask-cors
 4. Що робить функція `fetch()`?
 5. Навіщо потрібен `await` перед `fetch()`?
 6. Що таке CORS і чому виникають помилки CORS?
-7. Як у коді обробляються помилки при роботі з API?
+7. Як у коді обробляються помилки при роботі з API? Чому недостатньо лише блоку `catch`?

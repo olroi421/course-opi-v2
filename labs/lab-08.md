@@ -2,7 +2,7 @@
 
 ## 🎯 Мета роботи
 
-Набуття практичних навичок контейнеризації вебзастосунків за допомогою Docker, розуміння принципів роботи контейнерів та оркестрації багатоконтейнерних додатків, а також підготовка проєкту до розгортання в production середовищі.
+Набуття практичних навичок контейнеризації вебзастосунків за допомогою Docker, розуміння принципів роботи контейнерів та оркестрації багатоконтейнерних додатків, а також підготовка проєкту до розгортання в робочому (production) середовищі.
 
 ## ✅ Завдання
 
@@ -11,7 +11,7 @@
 ### Основні вимоги
 
 1. Створити Dockerfile для Flask застосунку з оптимізацією розміру образу.
-2. Налаштувати docker-compose.yml для оркестрації застосунку.
+2. Налаштувати файл Docker Compose (`compose.yaml`) для запуску застосунку.
 3. Організувати збереження SQLite бази даних через volumes.
 4. Додати змінні середовища для конфігурації застосунку.
 5. Налаштувати health check для перевірки працездатності застосунку.
@@ -19,9 +19,9 @@
 
 ## 🖥️ Програмне забезпечення
 
-- Docker Desktop [docker.com](https://www.docker.com/products/docker-desktop) - платформа для контейнеризації додатків.
+- Docker Desktop [docker.com](https://www.docker.com/products/docker-desktop) - платформа для контейнеризації додатків (містить Docker Engine та Docker Compose; у Windows потребує WSL 2, який інсталятор пропонує увімкнути).
 - Git - система контролю версій для збереження конфігураційних файлів.
-- Текстовий редактор або IDE для редагування Dockerfile та docker-compose.yml.
+- Visual Studio Code з розширенням Container Tools (або інший редактор) для редагування Dockerfile та `compose.yaml`.
 
 ## 👥 Форма виконання роботи
 
@@ -29,18 +29,18 @@
 
 ## 📝 Критерії оцінювання
 
-### Середній рівень (оцінка "задовільно", 4-6 бали)
+### Середній рівень (оцінка "задовільно", 4-6 балів)
 
 Виконано базову контейнеризацію застосунку:
 
 - створено простий Dockerfile для Flask застосунку;
 - застосунок успішно запускається в контейнері;
-- налаштовано docker-compose.yml для запуску сервісу;
+- налаштовано `compose.yaml` для запуску сервісу;
 - SQLite база даних зберігається у volume;
-- проєкт запускається командою `docker-compose up`;
+- проєкт запускається командою `docker compose up`;
 - підготовлено базову документацію із командами запуску.
 
-Під час захисту здобувач освіти демонструє базове розуміння концепції контейнеризації, може пояснити призначення основних директив у Dockerfile та структуру docker-compose.yml. Допускаються помилки у налаштуванні volumes, які не перешкоджають базовій роботі застосунку.
+Під час захисту здобувач освіти демонструє базове розуміння концепції контейнеризації, може пояснити призначення основних директив у Dockerfile та структуру `compose.yaml`. Допускаються помилки у налаштуванні volumes, які не перешкоджають базовій роботі застосунку.
 
 ### Достатній рівень (оцінка "добре", 7-9 балів)
 
@@ -61,7 +61,7 @@
 Виконано професійну контейнеризацію з додатковими можливостями:
 
 - всі вимоги достатнього рівня;
-- оптимізовано Dockerfile із використанням кешування шарів та Alpine образу;
+- оптимізовано Dockerfile із використанням кешування шарів та полегшеного (slim) базового образу;
 - налаштовано restart policies для автоматичного перезапуску сервісу;
 - створено окремі конфігурації для development та production середовищ;
 - додано додаткові сервіси (наприклад, Nginx як reverse proxy);
@@ -85,7 +85,7 @@ Docker — це платформа для розробки, доставки т�
 
 ### Основні переваги контейнеризації
 
-Контейнери забезпечують консистентність середовища на всіх етапах розробки. Застосунок, який працює на машині розробника, гарантовано працюватиме однаково в тестовому та production середовищах. Це усуває класичну проблему "works on my machine".
+Контейнери забезпечують однаковість середовища на всіх етапах розробки. Застосунок, який працює на машині розробника, працюватиме так само в тестовому та робочому середовищах. Це усуває класичну проблему "works on my machine" («а на моєму комп'ютері все працює»).
 
 Портативність контейнерів дозволяє легко переміщувати додатки між різними платформами та хмарними провайдерами. Контейнер з усіма залежностями може працювати на будь-якій системі, де встановлено Docker.
 
@@ -112,18 +112,20 @@ Docker Client — це інтерфейс командного рядка, че�
 
 Docker Daemon — це фоновий процес, який управляє контейнерами, образами, мережами та volumes. Daemon слухає API запити та виконує відповідні операції.
 
-Docker Image — це шаблон лише для читання, який містить інструкції для створення контейнера. Образи будуються з Dockerfile та можуть базуватися на інших образах.
+Docker Image (образ) — це шаблон лише для читання, який містить усе необхідне для створення контейнера. Образи будуються з Dockerfile та можуть базуватися на інших образах.
 
 Docker Container — це запущений екземпляр образу. Контейнер є ізольованим процесом з власною файловою системою, мережею та ресурсами.
 
+Docker Registry — сховище образів. Найвідоміше — Docker Hub, звідки завантажуються базові образи на кшталт `python:3.13-slim`.
+
 ### Dockerfile: структура та директиви
 
-Dockerfile — це текстовий файл, який містить інструкції для автоматичної збірки Docker образу. Кожна інструкція у Dockerfile створює новий шар в образі.
+Dockerfile — це текстовий файл, який містить інструкції для автоматичної збірки Docker образу. Інструкції, що змінюють файлову систему (`RUN`, `COPY`), створюють нові шари образу.
 
 Базовий образ визначається директивою FROM та є основою для вашого застосунку:
 
 ```dockerfile
-FROM python:3.11-slim
+FROM python:3.13-slim
 ```
 
 Робоча директорія встановлюється через WORKDIR. Всі наступні команди виконуватимуться відносно цієї директорії:
@@ -148,9 +150,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 Змінні середовища встановлюються через ENV та будуть доступні в контейнері:
 
 ```dockerfile
-ENV FLASK_APP=app.py
-ENV FLASK_ENV=production
+ENV DATABASE_PATH=/app/data/database.db
+ENV PYTHONUNBUFFERED=1
 ```
+
+`PYTHONUNBUFFERED=1` змушує Python одразу виводити повідомлення, тому вони без затримки з'являються в логах контейнера.
 
 Відкриття портів декларується через EXPOSE. Це документує, які порти використовує застосунок:
 
@@ -166,42 +170,47 @@ CMD ["python", "app.py"]
 
 ### Багатоетапна збірка
 
-Багатоетапна збірка дозволяє використовувати кілька FROM інструкцій в одному Dockerfile. Це допомагає значно зменшити розмір фінального образу, залишивши в ньому лише необхідні для запуску файли:
+Багатоетапна збірка дозволяє використовувати кілька FROM інструкцій в одному Dockerfile. Це допомагає зменшити розмір фінального образу, залишивши в ньому лише необхідні для запуску файли:
 
 ```dockerfile
 # Етап встановлення залежностей
-FROM python:3.11-slim AS builder
-WORKDIR /app
+FROM python:3.13-slim AS builder
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 COPY requirements.txt .
-RUN pip install --no-cache-dir --user -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Етап production
-FROM python:3.11-alpine
+# Фінальний етап
+FROM python:3.13-slim
 WORKDIR /app
-COPY --from=builder /root/.local /root/.local
+COPY --from=builder /opt/venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 COPY . .
-ENV PATH=/root/.local/bin:$PATH
 CMD ["python", "app.py"]
 ```
 
-У цьому прикладі перший етап встановлює Python пакети, а другий етап копіює лише встановлені пакети у легкий Alpine образ. Весь кеш pip та тимчасові файли залишаються в першому етапі та не потрапляють у фінальний образ.
+У цьому прикладі перший етап встановлює Python пакети у віртуальне середовище `/opt/venv`, а другий етап копіює лише готове середовище. Кеш pip, тимчасові файли та інструменти збірки (якщо вони знадобилися для компіляції пакетів) залишаються в першому етапі та не потрапляють у фінальний образ.
+
+> [!WARNING]
+> **Обидва етапи мають використовувати однаковий базовий образ**
+>
+> У старих прикладах трапляється збірка на `python:...-slim` (Debian) з копіюванням пакетів у `python:...-alpine`. Так робити не варто: Alpine використовує іншу системну бібліотеку C (musl замість glibc), тому скомпільовані частини пакетів можуть не запуститися. Для Python-застосунків у навчальних проєктах оптимальним є образ `slim`.
 
 ### Docker Compose
 
 Docker Compose — це інструмент для визначення та запуску багатоконтейнерних додатків. За допомогою YAML файлу ви описуєте всі сервіси вашого застосунку, а потім запускаєте їх однією командою.
 
-Основна структура docker-compose.yml включає версію специфікації, опис сервісів та volumes:
+Сучасний Docker Compose (версія 2 і новіші) вбудований у Docker і викликається командою `docker compose` (через пробіл). Стара окрема утиліта `docker-compose` (через дефіс) більше не підтримується. Рекомендована назва файлу — `compose.yaml` (стара назва `docker-compose.yml` теж розпізнається). Рядок `version: '3.8'` на початку файлу застарів і більше не потрібен — Compose лише виводить попередження про нього.
+
+Основна структура `compose.yaml` включає опис сервісів та volumes:
 
 ```yaml
-version: '3.8'
-
 services:
   web:
     build: .
     ports:
       - "5000:5000"
     environment:
-      - FLASK_APP=app.py
       - DATABASE_PATH=/app/data/database.db
     volumes:
       - sqlite_data:/app/data
@@ -216,7 +225,7 @@ volumes:
 
 Volumes — це механізм Docker для збереження даних, які генеруються та використовуються контейнерами. Дані в volumes зберігаються навіть після видалення контейнера.
 
-Для SQLite бази даних це особливо важливо, оскільки база даних зберігається у файлі. Без volume всі дані будуть втрачені при перезапуску або видаленні контейнера.
+Для SQLite бази даних це особливо важливо, оскільки база даних зберігається у файлі. Без volume всі дані будуть втрачені при видаленні контейнера (зокрема при `docker compose down` або перезбиранні образу).
 
 Named volumes керуються Docker і зберігаються в спеціальній директорії на хост-системі:
 
@@ -238,50 +247,58 @@ volumes:
 
 SQLite зберігає всю базу даних в одному файлі, що спрощує роботу з контейнерами порівняно з клієнт-серверними базами даних. Проте є кілька важливих моментів.
 
+Шлях до файлу бази даних має братися зі змінної середовища, а сам файл — лежати в директорії, яку підключено як volume (`/app/data`). Якщо файл бази даних лежить поруч з `app.py`, він потрапить в образ і кожне перезбирання образу «скидатиме» базу.
+
 Права доступу до файлу бази даних мають бути правильно налаштовані. Flask застосунок повинен мати можливість читати та писати у файл бази даних. Зазвичай це вирішується створенням директорії для даних під час збірки образу:
 
 ```dockerfile
-RUN mkdir -p /app/data && chmod 755 /app/data
+RUN mkdir -p /app/data
 ```
 
-Ініціалізація бази даних при першому запуску може бути автоматизована через скрипт або Flask команду. Якщо файл бази даних не існує, застосунок має створити його та виконати необхідні міграції.
+Ініціалізація бази даних при першому запуску може бути автоматизована: якщо таблиць ще немає, застосунок має створити їх (`CREATE TABLE IF NOT EXISTS ...`).
 
 Backup бази даних спрощується тим, що потрібно скопіювати лише один файл. Це можна автоматизувати через cron завдання або окремий контейнер.
 
 ### Health Checks
 
-Health checks дозволяють Docker перевіряти, чи працює контейнер коректно. Це особливо важливо для production середовищ:
+Health checks дозволяють Docker перевіряти, чи працює контейнер коректно. Docker періодично виконує вказану команду всередині контейнера: якщо вона завершилася успішно — контейнер `healthy`, якщо ні — `unhealthy`.
+
+Команда перевірки має використовувати лише ті програми, які є в образі. В образі `python:3.13-slim` немає `curl` і `wget`, зате є сам Python, тож перевірку зручно робити ним:
 
 ```dockerfile
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD python -c "import requests; requests.get('http://localhost:5000/')" || exit 1
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+  CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')" || exit 1
 ```
 
-У docker-compose.yml:
+Те саме у `compose.yaml`:
 
 ```yaml
 healthcheck:
-  test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+  test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')"]
   interval: 30s
   timeout: 3s
   retries: 3
-  start_period: 5s
+  start_period: 10s
 ```
 
-Для Flask застосунку можна створити спеціальний endpoint `/health`, який повертає статус сервісу та перевіряє доступність бази даних.
+Для Flask застосунку варто створити спеціальний endpoint `/health`, який повертає статус сервісу та перевіряє доступність бази даних (див. крок 6 ходу роботи).
 
 ### Змінні середовища та безпека
 
 Змінні середовища зберігаються в .env файлі, який не повинен потрапляти в систему контролю версій:
 
 ```env
-FLASK_APP=app.py
-FLASK_ENV=production
 SECRET_KEY=your-secret-key-here
 DATABASE_PATH=/app/data/database.db
+FLASK_DEBUG=0
 ```
 
-У docker-compose.yml вони використовуються так:
+> [!NOTE]
+> **FLASK_ENV більше не використовується**
+>
+> Змінна `FLASK_ENV`, яка трапляється в старих прикладах, видалена з Flask 2.3. Режим налагодження вмикається змінною `FLASK_DEBUG=1` (або параметром `debug=True`). У робочому середовищі режим налагодження має бути вимкнений.
+
+У `compose.yaml` вони використовуються так:
 
 ```yaml
 services:
@@ -294,18 +311,19 @@ services:
 
 ### Оптимізація Docker образів
 
-Зменшення розміру образу покращує швидкість розгортання та економить дисковий простір. Використовуйте Alpine або slim варіанти базових образів:
+Зменшення розміру образу покращує швидкість розгортання та економить дисковий простір. Використовуйте полегшені (slim) варіанти базових образів:
 
 ```dockerfile
-FROM python:3.11-alpine
+FROM python:3.13-slim
 ```
 
-Об'єднання команд RUN зменшує кількість шарів:
+Об'єднання пов'язаних команд в один RUN зменшує кількість шарів і дозволяє видаляти тимчасові файли в тому самому шарі, де вони з'явилися:
 
 ```dockerfile
-RUN apk add --no-cache gcc musl-dev && \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends gcc && \
     pip install --no-cache-dir -r requirements.txt && \
-    apk del gcc musl-dev
+    apt-get purge -y gcc && rm -rf /var/lib/apt/lists/*
 ```
 
 Використання .dockerignore файлу виключає непотрібні файли з контексту збірки:
@@ -313,24 +331,32 @@ RUN apk add --no-cache gcc musl-dev && \
 ```
 __pycache__
 *.pyc
-*.pyo
-*.pyd
 .pytest_cache
 .git
-.gitignore
 .env
-*.md
-.vscode
+.venv
 venv
+.vscode
+data/
 ```
 
-Кешування залежностей прискорює збірку. Копіюйте файли залежностей окремо та встановлюйте їх перед копіюванням решти коду:
+Кешування залежностей прискорює збірку. Копіюйте файли залежностей окремо та встановлюйте їх перед копіюванням решти коду — тоді при зміні лише коду Docker повторно використає вже встановлені пакети:
 
 ```dockerfile
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 ```
+
+## 🟣 Ресурси
+
+- [Docker: Get started](https://docs.docker.com/get-started/)
+- [Dockerfile reference](https://docs.docker.com/reference/dockerfile/)
+- [Docker Compose — документація](https://docs.docker.com/compose/)
+- [Multi-stage builds](https://docs.docker.com/build/building/multi-stage/)
+- [Docker volumes](https://docs.docker.com/engine/storage/volumes/)
+- [Офіційний образ Python на Docker Hub](https://hub.docker.com/_/python)
+- [Docker www.youtube.com](https://www.youtube.com/results?search_query=docker+flask)
 
 ## ▶️ Хід роботи
 
@@ -339,119 +365,103 @@ COPY . .
 Переконайтеся, що ваш Flask проєкт знаходиться в Git репозиторії та має чітку структуру. Типова структура проєкту:
 
 ```
-    myproject/
-    ├── app.py
-    ├── models.py
-    ├── templates/
-    ├── static/
-    ├── requirements.txt
-    └── data/
-        └── database.db
+myproject/
+├── app.py
+├── models.py
+├── templates/
+├── static/
+├── tests/
+├── requirements.txt
+└── data/
+    └── database.db
 ```
 
-Встановіть Docker Desktop на вашу систему та переконайтеся, що Docker працює коректно, виконавши команду:
+Встановіть Docker Desktop на вашу систему, запустіть його та переконайтеся, що Docker працює коректно:
 
 ```bash
 docker --version
-docker-compose --version
+docker compose version
+docker run hello-world
 ```
+
+Остання команда завантажує тестовий образ і запускає його; якщо ви бачите повідомлення `Hello from Docker!`, середовище готове.
 
 ### 2. Створення requirements.txt
 
-Якщо у вас ще немає файлу requirements.txt, створіть його зі списком всіх залежностей:
-
-```
-Flask==3.0.0
-Werkzeug==3.0.1
-```
-
-Можна автоматично згенерувати список залежностей:
+Якщо у вас ще немає актуального файлу requirements.txt, створіть його з активованого віртуального середовища проєкту:
 
 ```bash
 pip freeze > requirements.txt
 ```
+
+Приклад вмісту:
+
+```
+Flask==3.1.3
+flask-cors==6.0.5
+flasgger==0.9.7.1
+```
+
+Переконайтеся, що в списку є всі бібліотеки, які імпортує ваш застосунок, — інакше контейнер завершиться з помилкою `ModuleNotFoundError`.
 
 ### 3. Створення Dockerfile
 
 Створіть файл з назвою `Dockerfile` (без розширення) в кореневій директорії проєкту:
 
 ```dockerfile
-    # Багатоетапна збірка для оптимізації розміру
-    FROM python:3.11-slim AS builder
+# Етап 1: встановлення залежностей
+FROM python:3.13-slim AS builder
 
-    WORKDIR /app
+# Створюємо віртуальне середовище, яке потім скопіюємо у фінальний образ
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
-    # Копіюємо файли залежностей
-    COPY requirements.txt .
+# Спочатку копіюємо лише список залежностей — для кешування шару
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-    # Встановлюємо залежності у користувацьку директорію
-    RUN pip install --no-cache-dir --user -r requirements.txt
+# Етап 2: фінальний образ
+FROM python:3.13-slim
 
-    # Фінальний етап з легким образом
-    FROM python:3.11-alpine
+WORKDIR /app
 
-    WORKDIR /app
+# Копіюємо встановлені пакети з етапу збірки
+COPY --from=builder /opt/venv /opt/venv
 
-    # Копіюємо встановлені пакети з етапу збірки
-    COPY --from=builder /root/.local /root/.local
+# Налаштування змінних середовища
+ENV PATH="/opt/venv/bin:$PATH" \
+    PYTHONUNBUFFERED=1 \
+    DATABASE_PATH=/app/data/database.db
 
-    # Додаємо встановлені пакети до PATH
-    ENV PATH=/root/.local/bin:$PATH
+# Створюємо директорію для бази даних
+RUN mkdir -p /app/data
 
-    # Створюємо директорію для бази даних
-    RUN mkdir -p /app/data && chmod 755 /app/data
+# Копіюємо код застосунку
+COPY . .
 
-    # Копіюємо код застосунку
-    COPY . .
+# Відкриваємо порт
+EXPOSE 5000
 
-    # Налаштування змінних середовища
-    ENV FLASK_APP=app.py
-    ENV FLASK_ENV=production
-    ENV DATABASE_PATH=/app/data/database.db
+# Health check (у slim-образі немає curl/wget, тому використовуємо Python)
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+  CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')" || exit 1
 
-    # Відкриваємо порт
-    EXPOSE 5000
-
-    # Health check
-    HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-      CMD wget --no-verbose --tries=1 --spider http://localhost:5000/ || exit 1
-
-    # Команда запуску
-    CMD ["python", "app.py"]
+# Команда запуску
+CMD ["python", "app.py"]
 ```
 
-Якщо ваш застосунок потребує компіляції деяких пакетів, використайте інший варіант:
+Для середнього рівня достатньо одноетапного варіанту:
 
 ```dockerfile
-    FROM python:3.11-alpine
-
-    WORKDIR /app
-
-    # Встановлюємо системні залежності для компіляції
-    RUN apk add --no-cache gcc musl-dev
-
-    # Копіюємо та встановлюємо залежності
-    COPY requirements.txt .
-    RUN pip install --no-cache-dir -r requirements.txt
-
-    # Видаляємо інструменти збірки
-    RUN apk del gcc musl-dev
-
-    # Створюємо директорію для бази даних
-    RUN mkdir -p /app/data && chmod 755 /app/data
-
-    # Копіюємо код
-    COPY . .
-
-    ENV FLASK_APP=app.py
-    ENV FLASK_ENV=production
-    ENV DATABASE_PATH=/app/data/database.db
-
-    EXPOSE 5000
-
-    HEALTHCHECK --interval=30s --timeout=3s CMD wget --no-verbose --tries=1 --spider http://localhost:5000/ || exit 1
-
-    CMD ["python", "app.py"]
+FROM python:3.13-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+RUN mkdir -p /app/data
+COPY . .
+ENV DATABASE_PATH=/app/data/database.db PYTHONUNBUFFERED=1
+EXPOSE 5000
+CMD ["python", "app.py"]
 ```
 
 ### 4. Створення .dockerignore
@@ -459,34 +469,30 @@ pip freeze > requirements.txt
 Створіть файл `.dockerignore` для виключення непотрібних файлів з контексту збірки:
 
 ```
-    __pycache__
-    *.pyc
-    *.pyo
-    *.pyd
-    .pytest_cache
-    .coverage
-    htmlcov
-    .git
-    .gitignore
-    .env
-    .env.example
-    *.md
-    README.md
-    .vscode
-    .idea
-    venv
-    env
-    *.log
-    .DS_Store
-    Dockerfile
-    docker-compose.yml
-    .dockerignore
-    data/database.db
+__pycache__
+*.pyc
+*.pyo
+.pytest_cache
+.coverage
+htmlcov
+.git
+.gitignore
+.env
+.venv
+venv
+env
+.vscode
+.idea
+*.log
+.DS_Store
+data/
 ```
+
+Директорію `data/` виключаємо, щоб локальна база даних з комп'ютера розробника не потрапила в образ.
 
 ### 5. Оновлення Flask застосунку
 
-Переконайтеся, що шлях до бази даних береться зі змінних середовища. Оновіть ваш `app.py`:
+Переконайтеся, що шлях до бази даних береться зі змінних середовища, а сервер слухає адресу `0.0.0.0`. Оновіть ваш `app.py`:
 
 ```python
 import os
@@ -495,68 +501,70 @@ from flask import Flask
 app = Flask(__name__)
 
 # Отримуємо шлях до бази даних зі змінної середовища
-DATABASE_PATH = os.environ.get('DATABASE_PATH', 'data/database.db')
-
-# Налаштування Flask
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DATABASE_PATH}'
+app.config['DATABASE'] = os.environ.get('DATABASE_PATH', 'data/database.db')
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
 
-# Решта коду...
+# Решта коду: get_db(), init_db(), маршрути...
 
 if __name__ == '__main__':
     # Створюємо директорію для бази даних, якщо її немає
-    os.makedirs(os.path.dirname(DATABASE_PATH), exist_ok=True)
+    os.makedirs(os.path.dirname(app.config['DATABASE']), exist_ok=True)
 
     # Ініціалізуємо базу даних при першому запуску
     with app.app_context():
-        db.create_all()
+        init_db()
 
     # Запускаємо сервер
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000,
+            debug=os.environ.get('FLASK_DEBUG') == '1')
 ```
 
-Якщо ви не використовуєте SQLAlchemy, адаптуйте код для вашої конфігурації бази даних.
+> [!WARNING]
+> **Чому host='0.0.0.0' обов'язковий**
+>
+> За замовчуванням `app.run()` слухає лише адресу `127.0.0.1` — тобто приймає з'єднання тільки зсередини самого контейнера. Тоді контейнер запускається без помилок, але в браузері сторінка не відкривається. Параметр `host='0.0.0.0'` дозволяє приймати з'єднання ззовні контейнера.
 
-### 6. Додавання health endpoint (опціонально)
+Якщо ви використовуєте SQLAlchemy, замість `init_db()` викличте `db.create_all()`, а шлях передайте в `SQLALCHEMY_DATABASE_URI`.
+
+### 6. Додавання health endpoint
 
 Створіть endpoint для health check, який перевіряє доступність бази даних:
 
 ```python
+import sqlite3
+
 @app.route('/health')
 def health():
     try:
         # Перевіряємо підключення до бази даних
-        db.session.execute('SELECT 1')
+        get_db().execute('SELECT 1')
         return {'status': 'healthy', 'database': 'connected'}, 200
-    except Exception as e:
+    except sqlite3.Error as e:
         return {'status': 'unhealthy', 'error': str(e)}, 500
 ```
 
-### 7. Створення docker-compose.yml
+Якщо ви використовуєте SQLAlchemy 2.x, текстовий SQL потрібно обгорнути у `text()`: `db.session.execute(text('SELECT 1'))`.
 
-Створіть файл `docker-compose.yml` для зручного запуску проєкту:
+### 7. Створення compose.yaml
+
+Створіть файл `compose.yaml` для зручного запуску проєкту:
 
 ```yaml
-version: '3.8'
-
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     container_name: flask_app
     ports:
       - "5000:5000"
+    env_file:
+      - .env
     environment:
-      - FLASK_APP=app.py
-      - FLASK_ENV=production
       - DATABASE_PATH=/app/data/database.db
-      - SECRET_KEY=${SECRET_KEY:-default-secret-key}
     volumes:
       - sqlite_data:/app/data
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:5000/"]
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')"]
       interval: 30s
       timeout: 3s
       retries: 3
@@ -564,35 +572,31 @@ services:
 
 volumes:
   sqlite_data:
-    driver: local
 ```
 
-Для development середовища з live reload:
+Для development середовища з автоматичним перезапуском при зміні коду створіть окремий файл `compose.dev.yaml`:
 
 ```yaml
-version: '3.8'
-
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     container_name: flask_app_dev
     ports:
       - "5000:5000"
     environment:
-      - FLASK_APP=app.py
-      - FLASK_ENV=development
       - DATABASE_PATH=/app/data/database.db
+      - FLASK_DEBUG=1
       - SECRET_KEY=dev-secret-key
     volumes:
       - .:/app
       - sqlite_data:/app/data
-    command: python -m flask run --host=0.0.0.0 --port=5000 --reload
+    command: python app.py
 
 volumes:
   sqlite_data:
 ```
+
+Запуск development конфігурації: `docker compose -f compose.dev.yaml up`. Bind mount `.:/app` підключає код з вашого комп'ютера в контейнер, а `FLASK_DEBUG=1` вмикає режим налагодження з автоматичним перезапуском, тому зміни у файлах одразу видно без перезбирання образу.
 
 ### 8. Створення .env файлу
 
@@ -600,31 +604,25 @@ volumes:
 
 ```env
 # Flask configuration
-FLASK_APP=app.py
-FLASK_ENV=production
 SECRET_KEY=your-random-secret-key-here
-
-# Database
-DATABASE_PATH=/app/data/database.db
+FLASK_DEBUG=0
 ```
+
+Випадковий ключ можна згенерувати командою `python -c "import secrets; print(secrets.token_hex(32))"`.
 
 Створіть також файл `.env.example` з шаблоном (його можна додати в репозиторій):
 
 ```env
 # Flask configuration
-FLASK_APP=app.py
-FLASK_ENV=production
 SECRET_KEY=change-this-to-random-string
-
-# Database
-DATABASE_PATH=/app/data/database.db
+FLASK_DEBUG=0
 ```
 
 Оновіть .gitignore:
 
 ```
 .env
-data/database.db
+data/
 ```
 
 ### 9. Збірка та запуск контейнерів
@@ -632,7 +630,7 @@ data/database.db
 Виконайте збірку образу:
 
 ```bash
-docker-compose build
+docker compose build
 ```
 
 Перегляньте розмір створеного образу:
@@ -644,30 +642,30 @@ docker images
 Запустіть застосунок:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 Перегляньте стан контейнера:
 
 ```bash
-docker-compose ps
+docker compose ps
 ```
 
 Перегляньте логи:
 
 ```bash
-docker-compose logs -f web
+docker compose logs -f web
 ```
 
 ### 10. Тестування застосунку
 
 Відкрийте браузер та перейдіть на `http://localhost:5000`. Перевірте, чи всі функції застосунку працюють коректно.
 
-Додайте кілька записів до бази даних через інтерфейс застосунку. Потім зупиніть контейнер та запустіть знову:
+Додайте кілька записів до бази даних через інтерфейс застосунку. Потім зупиніть і видаліть контейнер та запустіть знову:
 
 ```bash
-docker-compose down
-docker-compose up -d
+docker compose down
+docker compose up -d
 ```
 
 Переконайтеся, що дані збереглися та не втратилися після перезапуску.
@@ -677,15 +675,15 @@ docker-compose up -d
 Перегляньте статус health check:
 
 ```bash
-docker ps
+docker compose ps
 ```
 
-У колонці STATUS ви побачите `healthy` або `unhealthy`.
+У колонці STATUS ви побачите `healthy` або `unhealthy` (протягом перших секунд — `health: starting`).
 
 Детальніша інформація:
 
 ```bash
-docker inspect flask_app | grep -A 10 Health
+docker inspect --format "{{json .State.Health}}" flask_app
 ```
 
 ### 12. Робота з базою даних
@@ -693,7 +691,7 @@ docker inspect flask_app | grep -A 10 Health
 Якщо потрібно створити backup бази даних:
 
 ```bash
-docker-compose exec web cp /app/data/database.db /app/data/backup.db
+docker compose exec web cp /app/data/database.db /app/data/backup.db
 ```
 
 Або скопіювати на хост-систему:
@@ -706,7 +704,7 @@ docker cp flask_app:/app/data/database.db ./backup.db
 
 ```bash
 docker cp ./backup.db flask_app:/app/data/database.db
-docker-compose restart web
+docker compose restart web
 ```
 
 ### 13. Корисні команди Docker
@@ -714,25 +712,25 @@ docker-compose restart web
 Зупинка застосунку:
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 Зупинка з видаленням volumes (база даних буде видалена):
 
 ```bash
-docker-compose down -v
+docker compose down -v
 ```
 
 Перегляд логів у реальному часі:
 
 ```bash
-docker-compose logs -f
+docker compose logs -f
 ```
 
 Виконання команди в контейнері:
 
 ```bash
-docker-compose exec web sh
+docker compose exec web sh
 ```
 
 Перегляд використання ресурсів:
@@ -747,9 +745,10 @@ docker stats flask_app
 docker system prune -a
 ```
 
-Перегляд інформації про volume:
+Перегляд інформації про volume (назва складається з назви директорії проєкту та назви volume):
 
 ```bash
+docker volume ls
 docker volume inspect myproject_sqlite_data
 ```
 
@@ -758,25 +757,32 @@ docker volume inspect myproject_sqlite_data
 Якщо контейнер не запускається, перегляньте логи:
 
 ```bash
-docker-compose logs web
+docker compose logs web
 ```
+
+Типові причини:
+
+- `ModuleNotFoundError` — бібліотеки немає в `requirements.txt`;
+- контейнер працює, але сторінка не відкривається — у `app.run()` не вказано `host='0.0.0.0'`;
+- `port is already allocated` — порт 5000 зайнятий (наприклад, локально запущеним Flask або службою AirPlay Receiver у macOS); змініть ліву частину відображення порту: `"5001:5000"`;
+- `env file .env not found` — створіть файл `.env` (можна скопіювати з `.env.example`).
 
 Якщо виникають проблеми з правами доступу до бази даних, перевірте права директорії:
 
 ```bash
-docker-compose exec web ls -la /app/data
+docker compose exec web ls -la /app/data
 ```
 
 Якщо база даних не ініціалізується, виконайте ініціалізацію вручну:
 
 ```bash
-docker-compose exec web python -c "from app import db; db.create_all()"
+docker compose exec web python -c "from app import app, init_db; app.app_context().push(); init_db()"
 ```
 
 Для перевірки змінних середовища:
 
 ```bash
-docker-compose exec web env
+docker compose exec web env
 ```
 
 ### 15. Додавання Nginx (для високого рівня)
@@ -795,33 +801,27 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 
-    location /static {
-        alias /app/static;
+    location /static/ {
+        alias /app/static/;
     }
 }
 ```
 
-Оновіть docker-compose.yml:
+Оновіть `compose.yaml`:
 
 ```yaml
-version: '3.8'
-
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     container_name: flask_app
     expose:
       - "5000"
+    env_file:
+      - .env
     environment:
-      - FLASK_APP=app.py
-      - FLASK_ENV=production
       - DATABASE_PATH=/app/data/database.db
-      - SECRET_KEY=${SECRET_KEY:-default-secret-key}
     volumes:
       - sqlite_data:/app/data
-      - static_files:/app/static
     restart: unless-stopped
 
   nginx:
@@ -830,75 +830,41 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - static_files:/app/static
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./static:/app/static:ro
     depends_on:
       - web
     restart: unless-stopped
 
 volumes:
   sqlite_data:
-  static_files:
 ```
+
+Тепер застосунок доступний за адресою `http://localhost` (порт 80), а статичні файли Nginx віддає напряму з директорії `static/` проєкту, не звертаючись до Flask.
+
+Для робочого середовища замість вбудованого сервера Flask (`python app.py`) зазвичай використовують WSGI-сервер Gunicorn. Для цього додайте `gunicorn` до `requirements.txt` і змініть команду запуску в Dockerfile: `CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]`. Зверніть увагу: у такому разі блок `if __name__ == '__main__':` не виконується, тому виклик `init_db()` потрібно перенести за його межі.
 
 ### 16. Підготовка документації
 
-Створіть файл `README.md` з описом виконаної роботи та інструкціями щодо запуску проєкту:
+Створіть файл `README.md` з описом виконаної роботи та інструкціями щодо запуску проєкту. Рекомендована структура:
 
-```markdown
-    # Звіт з контейнеризації проєкту
+- короткий опис застосунку;
+- команди запуску проєкту в контейнерах (від клонування репозиторію до відкриття в браузері);
+- опис образу: базовий образ, розмір, чи використано багатоетапну збірку;
+- сервіси та volumes з `compose.yaml`, змінні середовища (з посиланням на `.env.example`);
+- обґрунтування прийнятих рішень (вибір образу, збереження бази даних, оптимізації);
+- для високого рівня: схема архітектури та розділ з типовими проблемами;
+- висновки.
 
-    ## Огляд проєкту
+### 17. Перевірка на «чистій» системі
 
-    [Опишіть ваш Flask застосунок та його функціональність]
-
-    ## Архітектура контейнерного рішення
-
-    ### Docker образ
-
-    - Базовий образ: python:3.11-alpine
-    - Розмір фінального образу: [вкажіть розмір]
-    - Використання багатоетапної збірки: [так/ні]
-
-    ### Docker Compose
-
-    - Кількість сервісів: [вкажіть]
-    - Використовувані volumes: [перелічіть]
-
-    ## Прийняті рішення та обґрунтування
-
-    ### Вибір базового образу
-
-    [Поясніть, чому обрали саме цей образ]
-
-    ### Організація збереження даних
-
-    [Опишіть, як організовано збереження SQLite бази]
-
-    ### Оптимізації
-
-    [Перелічіть застосовані оптимізації]
-
-    ## Інструкції з розгортання
-
-    [Покрокові інструкції]
-
-    ## Можливі покращення
-
-    [Що можна було б додати або покращити]
-
-    ## Висновки
-
-    [Ваші висновки про контейнеризацію]
-```
-
-Переконайтеся, що проєкт запускається з нуля на чистій системі. Видаліть всі контейнери та volumes, потім виконайте повний цикл збірки та запуску.
+Переконайтеся, що проєкт запускається з нуля. Видаліть контейнери та volumes (`docker compose down -v`), клонуйте репозиторій у нову директорію, створіть `.env` з `.env.example` і виконайте `docker compose up --build`.
 
 ### 18. Здача роботи
 
 Завантажте до системи LMS Moodle:
 
-- посилання на Git репозиторій з усіма файлами (Dockerfile, docker-compose.yml, .dockerignore, README.md).
+- посилання на Git репозиторій з усіма файлами (Dockerfile, compose.yaml, .dockerignore, .env.example, README.md).
 
 [👉 Здати лабораторну роботу](https://moodle.vcolnuft.volyn.ua/moodle/course/view.php?id=1426#section-2)
 
