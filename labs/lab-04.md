@@ -186,7 +186,7 @@ cursor.execute('INSERT INTO users (name, email) VALUES (?, ?)', (name, email))
 
 ## ▶️ Хід роботи
 
-Приклад виконання лабораторної роботи ([📦 навчальний додаток](assets/lab04-flaskProject.zip))
+Приклад виконання лабораторної роботи ([📦 навчальний додаток](assets/lab04-flaskProject-db.zip))
 
 1. Налаштування проєкту
     ```
